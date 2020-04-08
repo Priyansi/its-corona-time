@@ -14,10 +14,11 @@ walkRight = [pygame.image.load('R1.png'), pygame.image.load('R2.png'), pygame.im
     'R5.png'), pygame.image.load('R6.png'), pygame.image.load('R7.png'), pygame.image.load('R8.png'), pygame.image.load('R9.png')]
 walkLeft = [pygame.image.load('L1.png'), pygame.image.load('L2.png'), pygame.image.load('L3.png'), pygame.image.load('L4.png'), pygame.image.load(
     'L5.png'), pygame.image.load('L6.png'), pygame.image.load('L7.png'), pygame.image.load('L8.png'), pygame.image.load('L9.png')]
-bg = pygame.image.load('bg1.jpg')
+bg = pygame.image.load('bg.jpg')
 bulletImage = pygame.image.load('bullet.png')
 
 hitSound = pygame.mixer.Sound('hit.wav')
+gameoverSound = pygame.mixer.Sound('gameover.wav')
 
 music = pygame.mixer.music.load('music.mp3')
 pygame.mixer.music.play(-1)
@@ -180,6 +181,8 @@ while run:
             score -= 10
 
             if score < 0:
+                pygame.mixer.music.set_volume(0)
+                gameoverSound.play()
                 text = font[3].render('You\'re Dead XD', 1, (255, 0, 0))
                 win.blit(
                     text, (screenWidth//2-(text.get_width()//2), screenHeight//3))
