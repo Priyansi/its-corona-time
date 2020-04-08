@@ -7,7 +7,7 @@ screenHeight = 500
 win = pygame.display.set_mode((750, 500))
 
 # naming the game
-pygame.display.set_caption("Go Corona Go")
+pygame.display.set_caption("It's Corona Time")
 
 # loading character left and right images, bullet and background images
 walkRight = [pygame.image.load('R1.png'), pygame.image.load('R2.png'), pygame.image.load('R3.png'), pygame.image.load('R4.png'), pygame.image.load(
@@ -70,8 +70,7 @@ class player(object):
         self.x = 30
         self.y = 405
         self.walkCount = 0
-        font1 = pygame.font.SysFont('comicsans', 150)
-        text = font1.render('-10', 1, (255, 0, 0))
+        text = font[2].render('-10', 1, (255, 0, 0))
         win.blit(text, (screenWidth//2-(text.get_width()//2), screenHeight//3))
         pygame.display.update()
         i = 0
@@ -150,8 +149,11 @@ class enemy(object):
 
 def redrawGameWindow():
     win.blit(bg, (0, 0))
-    text = font.render('Score : '+str(score), 1, (0, 0, 0))
-    win.blit(text, (550, 10))
+    text = font[0].render('Score : '+str(score), 1, (0, 0, 0))
+    text1 = font[1].render(
+        'Shoot 20 Soaps To Kill The Coronavirus', 1, (0, 0, 0))
+    win.blit(text, (600, 10))
+    win.blit(text1, (10, 10))
     girl.draw(win)
     virus.draw(win)
     for bullet in bullets:
@@ -164,9 +166,12 @@ def redrawGameWindow():
 girl = player(30, 405, 64, 64)
 virus = enemy(100, 405, 64, 63, 600)
 bullets = []
+font = []
 shootLoop = 0
-font = pygame.font.SysFont('comicsans', 40, True)
+font = [pygame.font.SysFont('comicsans', 35, True), pygame.font.SysFont(
+    'comicsans', 35), pygame.font.SysFont('comicsans', 150), pygame.font.SysFont('comicsans', 150)]
 run = True
+level = 1
 while run:
     clock.tick(27)
 
@@ -175,13 +180,12 @@ while run:
             score -= 10
 
             if score < 0:
-                font2 = pygame.font.SysFont('comicsans', 200)
-                text = font2.render('You Lost :(', 1, (255, 0, 0))
+                text = font[3].render('You\'re Dead XD', 1, (255, 0, 0))
                 win.blit(
                     text, (screenWidth//2-(text.get_width()//2), screenHeight//3))
                 pygame.display.update()
                 i = 0
-                while i < 200:
+                while i < 300:
                     pygame.time.delay(10)
                     i += 1
                 break
@@ -205,7 +209,21 @@ while run:
                     score += 1
                 else:
                     score += 1
-                    virus = enemy(100, 405, 64, 63, 600)
+
+                    if level < 5:
+                        level += 1
+                    else:
+                        text = font[3].render('You Won :D', 1, (255, 0, 0))
+                        win.blit(
+                            text, (screenWidth//2-(text.get_width()//2), screenHeight//3))
+                        pygame.display.update()
+                        i = 0
+                        while i < 300:
+                            pygame.time.delay(10)
+                            i += 1
+                        break
+
+                    virus = enemy(100, 405-level*20, 64, 63, 600)
                 bullets.pop(bullets.index(bullet))
         if bullet.x < screenWidth and bullet.x > 0:
             bullet.x += bullet.vel
