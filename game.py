@@ -161,19 +161,31 @@ def redrawGameWindow():
 
 
 # main loop
-font = pygame.font.SysFont('comicsans', 40, True)
 girl = player(30, 405, 64, 64)
 virus = enemy(100, 405, 64, 63, 600)
 bullets = []
 shootLoop = 0
+font = pygame.font.SysFont('comicsans', 40, True)
 run = True
 while run:
     clock.tick(27)
 
     if girl.hitbox[1] < virus.hitbox[1]+virus.hitbox[3] and girl.hitbox[1]+girl.hitbox[3] > virus.hitbox[1]:
         if girl.hitbox[0]+girl.hitbox[2] > virus.hitbox[0] and girl.hitbox[0] - girl.hitbox[2] < virus.hitbox[0] + virus.hitbox[2]:
-            girl.hit()
             score -= 10
+
+            if score < 0:
+                font2 = pygame.font.SysFont('comicsans', 200)
+                text = font2.render('You Lost :(', 1, (255, 0, 0))
+                win.blit(
+                    text, (screenWidth//2-(text.get_width()//2), screenHeight//3))
+                pygame.display.update()
+                i = 0
+                while i < 200:
+                    pygame.time.delay(10)
+                    i += 1
+                break
+            girl.hit()
 
     if shootLoop > 0:
         shootLoop += 1
