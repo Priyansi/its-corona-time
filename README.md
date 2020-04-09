@@ -1,4 +1,4 @@
-# It's Corona Time
+## It's Corona Time
 Made using Pygame.
 
 # To Run :
