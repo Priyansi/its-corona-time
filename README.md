@@ -1,6 +1,6 @@
-## It's Corona Time
+# It's Corona Time
 Made using Pygame.
 
-# To Run :
+## To Run :
 1. **Clone** the repository.
 2. Run **game.py**.
